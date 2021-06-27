@@ -2,7 +2,7 @@ import os
 import random
 from tkinter.constants import END
 
-# global variable
+# Global variable
 
 matriz = []
 sele = []
@@ -10,7 +10,7 @@ k = 3
 
 #Game
 
-def machine():
+def machine(): # backtracking: evaluation all posivilitys.
     for i in range(0,9):
         if move(i, 2):
             if win(2):
@@ -28,10 +28,10 @@ def machine():
     
     
     i = random.choice(sele)
-    if move(i, 2):
+    if move(i, 2): # if don't see any win movemet, move aleatority. 
         return i
 
-def move(i, jugador):
+def move(i, jugador): # see if the movement is correct.
     if matriz[i] == 0: 
         matriz[i] = jugador
         sele.remove(i)
@@ -39,7 +39,7 @@ def move(i, jugador):
     else:
         return False
    
-def win(player):
+def win(player):  # Evaluate the move, and see if  it is winner.
     for i in range(0,k):
         # rows
         cont = 0
@@ -72,7 +72,7 @@ def win(player):
     
     return False
 
-def again():
+def again(): # Reset all global variables
     global matriz, sele
     matriz.clear()
     sele.clear()

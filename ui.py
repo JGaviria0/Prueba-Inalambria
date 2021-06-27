@@ -23,18 +23,18 @@ def menu():
     img2 = Image.open('img/menu2.png')
     img2 = img2.resize((432, 141), Image.ANTIALIAS)
     img2 = ImageTk.PhotoImage(img2)
-    button.append( tk.Button(app, image=img2, width=432, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: conAmigo(1)) ) 
+    button.append( tk.Button(app, image=img2, width=432, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: withParner(1)) ) 
     button[1].place(x = 183, y = 370)
 
     img3 = Image.open('img/menu3.png')
     img3 = img3.resize((632, 141), Image.ANTIALIAS)
     img3 = ImageTk.PhotoImage(img3)
-    button.append(tk.Button( app, image=img3, width=632, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: conAmigo(0)) ) 
+    button.append(tk.Button( app, image=img3, width=632, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: withParner(0)) ) 
     button[2].place(x = 84, y = 521)
 
     app.mainloop()
 
-def table():
+def table(): #Creation the table.
     global turn
     turn = 0
     img = Image.open('img/cube.png')
@@ -52,17 +52,16 @@ def table():
     button.append(tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5, command=lambda: movement(8)))
     button.append(tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5, command=lambda: movement(9)))
 
-
     for i in range (0,9):
         button[i].place(x= positionX[i%3], y = positionX[i//3])
     
     app.mainloop()
 
-def clearall():
+def clearall(): #Clear the area, delete buttons.
     for i in button:
             i.destroy()
 
-def ganaX():
+def winX(): #Graph mode if X win.
     img = Image.open('img/GanaX.png')
     img = img.resize((800, 800), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
@@ -73,7 +72,7 @@ def ganaX():
     background.destroy()
     menu()
 
-def ganaO():
+def winO(): #Graph mode if O win.
     img = Image.open('img/GanaO.png')
     img = img.resize((800, 800), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
@@ -84,7 +83,7 @@ def ganaO():
     background.destroy()
     menu()
 
-def empate():
+def draw():  #Graph mode if they tie.
     img = Image.open('img/Empate.png')
     img = img.resize((800, 800), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
@@ -95,7 +94,7 @@ def empate():
     background.destroy()
     menu()
 
-def conAmigo(i):
+def withParner(i): #Choose if there are another player.
     global parner 
     if i == 0:
         parner = False
@@ -105,56 +104,8 @@ def conAmigo(i):
     clearall()
     table()
 
-def movement(i):
-    global turn 
-    global parner
 
-    if (turn%2 == 0 or parner):
-        game.move(i-1, 1)
-        img = Image.open('img/X.png')
-        img = img.resize((200, 200), Image.ANTIALIAS)
-        img = ImageTk.PhotoImage(img)
-        button[i-1].destroy()
-        button[i-1] = tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5)
-        button[i-1].place(x= positionX[(i-1)%3], y = positionX[(i-1)//3])
-        turn = turn + 1
-        
-        if game.win(1):
-            app.update()
-            time.sleep(1.5)
-            print("GANA X")
-            clearall()
-            ganaX() 
-        elif parner and turn <9:
-            movementMachine(game.machine())
-        app.mainloop()
-    
-    else: 
-        game.move(i-1, 2)
-        img = Image.open('img/circulo.png')
-        img = img.resize((200, 200), Image.ANTIALIAS)
-        img = ImageTk.PhotoImage(img)
-        button[i-1].destroy()
-        button[i-1] = tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5)
-        button[i-1].place(x= positionX[(i-1)%3], y = positionX[(i-1)//3])
-        turn = turn + 1
-        if turn >= 9:
-            app.update()
-            time.sleep(1.5)
-            print ("Empate")
-            clearall()
-            empate()
-        else:
-            if game.win(2):
-                app.update()
-                time.sleep(1.5)
-                print("GANA O")
-                clearall()
-                ganaO()
-        app.mainloop()
-                
-
-def movementMachine(i):
+def movementMachine(i): # backtracking: evaluation all posivilitys.
     img = Image.open('img/circulo.png')
     img = img.resize((200, 200), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
@@ -167,10 +118,72 @@ def movementMachine(i):
         time.sleep(1.5)
         print("GANA O")
         clearall()
-        ganaO()
+        winO()
         time.sleep(2)
         table()
     app.mainloop()
+
+def movePlayerX(i): #Refresh the screen with playerX's movement.
+    global turn 
+    global parner
+
+    game.move(i-1, 1)
+    img = Image.open('img/X.png')
+    img = img.resize((200, 200), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
+    button[i-1].destroy()
+    button[i-1] = tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5)
+    button[i-1].place(x= positionX[(i-1)%3], y = positionX[(i-1)//3])
+    turn = turn + 1
+    if turn >= 9:
+        app.update()
+        time.sleep(1.5)
+        print ("Empate")
+        clearall()
+        draw()
+    elif game.win(1):
+        app.update()
+        time.sleep(1.5)
+        print("GANA X")
+        clearall()
+        winX() 
+    elif parner:
+        turn +=1
+        movementMachine(game.machine())
+    app.mainloop()
+
+def movePlayerO(i): #Refresh the screen with playerO's movement 
+    global turn 
+
+    game.move(i-1, 2)
+    img = Image.open('img/circulo.png')
+    img = img.resize((200, 200), Image.ANTIALIAS)
+    img = ImageTk.PhotoImage(img)
+    button[i-1].destroy()
+    button[i-1] = tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5)
+    button[i-1].place(x= positionX[(i-1)%3], y = positionX[(i-1)//3])
+    turn = turn + 1
+    if turn >= 9:
+        app.update()
+        time.sleep(1.5)
+        print ("Empate")
+        clearall()
+        draw()
+    elif game.win(2):
+        app.update()
+        time.sleep(1.5)
+        print("GANA O")
+        clearall()
+        winO()
+    app.mainloop()
+
+def movement(i): #The moments who the buttons going to do.
+    global turn 
+    global parner
+
+    if (turn%2 == 0 or parner):
+        movePlayerX(i)
+    else: 
+        movePlayerO(i)             
    
-# table()
 menu()
