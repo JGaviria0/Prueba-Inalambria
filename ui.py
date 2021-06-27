@@ -2,6 +2,7 @@ import tkinter as tk
 from PIL import Image,ImageTk
 import Game as game
 import time
+import sys
 
 app = tk.Tk()
 app.geometry("800x820")
@@ -50,9 +51,7 @@ def menu():
     app.mainloop()
 
 def exit(): #delete all the window
-    clearall()
-    white.destroy()
-    app.destroy()
+    sys.exit()
 
 def table(): #Creation the table.
     global turn
@@ -155,18 +154,19 @@ def movePlayerX(i): #Refresh the screen with playerX's movement.
     button[i-1] = tk.Button(app, image=img, width=200, height=200, compound="c", relief="flat", borderwidth=5)
     button[i-1].place(x= positionX[(i-1)%3], y = positionX[(i-1)//3])
     turn = turn + 1
-    if turn >= 9:
-        app.update()
-        time.sleep(1.5)
-        print ("Empate")
-        clearall()
-        draw()
-    elif game.win(1):
+    
+    if game.win(1):
         app.update()
         time.sleep(1.5)
         print("GANA X")
         clearall()
         winX() 
+    elif turn >= 9:
+        app.update()
+        time.sleep(1.5)
+        print ("Empate")
+        clearall()
+        draw()
     elif parner:
         turn +=1
         movementMachine(game.machine())
