@@ -8,13 +8,13 @@ Triqui en modo gráfico, con dos modos de juego, 1 vs 1 que se refiere a dos per
 
 ### Pre-requisitos 📋
 
-Tener installado **Python3** en un sistema operativo que posea una **interfaz grafica**.
+Tener instalado **Python3** en un sistema operativo que posea una **interfaz gráfica**.
 
 ------------
 
-### Instalación de las librerias 🔧
+### Instalación de las librerías 🔧
 
-En este pograma se uso la libreria de **TKINTER** su instalación es muy sencilla: 
+En este programa se usó la librería de **TKINTER** su instalación es muy sencilla: 
 
 ```
 pip install tk
@@ -29,7 +29,7 @@ Luego de seguir todos los pasos descritos, estamos casi listos para ejecutar el 
 cd Prueba-Inalambria
 ```
 
-Ahora si, dentro de esta carpeta ejecutamos el siguiente y ultimo comando.
+Ahora sí, dentro de esta carpeta ejecutamos el siguiente y ultimo comando.
 
 ```
 python3 init.py
@@ -39,7 +39,7 @@ python3 init.py
 
 ## Dudas
 
-Si te quedo la inquietud o no te funciona la ejecución del proyecto, puedes escribirme a mi correo personal, o a mi instagram. 
+Si te quedo la inquietud o no te funciona la ejecución del proyecto, puedes escribirme a mi correo personal, o a mi Instagram. 
 
 <https://www.instagram.com/jgaviria0/>
 
