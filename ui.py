@@ -4,35 +4,55 @@ import Game as game
 import time
 
 app = tk.Tk()
-app.geometry("800x800")
+app.geometry("800x820")
+app.title("Triqui / Tres en raya")
 
+white = 0
 button = []
 positionX = [110, 310, 510]
 turn = 0
 parner = True
 
 def menu():
-    global button
+    global button, white
     button = []
+
+    img5 = Image.open('img/blanca.png')
+    img5 = img5.resize((800, 820), Image.ANTIALIAS)
+    img5 = ImageTk.PhotoImage(img5)
+    white = tk.Label(app, image = img5)
+    white.place(x = 0, y = 0)
+
     img = Image.open('img/menu1.png')
     img = img.resize((639, 300), Image.ANTIALIAS)
     img = ImageTk.PhotoImage(img)
     button.append(tk.Label(app, image = img))
-    button[0].place(x = 80, y = 50)
+    button[0].place(x = 80, y = 30)
 
     img2 = Image.open('img/menu2.png')
     img2 = img2.resize((432, 141), Image.ANTIALIAS)
     img2 = ImageTk.PhotoImage(img2)
     button.append( tk.Button(app, image=img2, width=432, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: withParner(1)) ) 
-    button[1].place(x = 183, y = 370)
+    button[1].place(x = 183, y = 345)
 
     img3 = Image.open('img/menu3.png')
     img3 = img3.resize((632, 141), Image.ANTIALIAS)
     img3 = ImageTk.PhotoImage(img3)
     button.append(tk.Button( app, image=img3, width=632, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: withParner(0)) ) 
-    button[2].place(x = 84, y = 521)
+    button[2].place(x = 84, y = 500)
+
+    img4 = Image.open('img/menu4.png')
+    img4 = img4.resize((432, 141), Image.ANTIALIAS)
+    img4 = ImageTk.PhotoImage(img4)
+    button.append(tk.Button( app, image=img4, width=432, height=141, compound="c", relief="flat", borderwidth=5, command=lambda: exit()) ) 
+    button[3].place(x = 183, y = 653)
 
     app.mainloop()
+
+def exit(): #delete all the window
+    clearall()
+    white.destroy()
+    app.destroy()
 
 def table(): #Creation the table.
     global turn

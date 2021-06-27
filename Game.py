@@ -2,13 +2,13 @@ import os
 import random
 from tkinter.constants import END
 
-# Global variable
+# ------------------ Global variable ------------------
 
 matriz = []
 sele = []
 k = 3
 
-#Game
+# ---------------- Game ------------------
 
 def machine(): # backtracking: evaluation all posivilitys.
     for i in range(0,9):
@@ -25,7 +25,6 @@ def machine(): # backtracking: evaluation all posivilitys.
                 return i
             matriz[i] = 0
             sele.append(i)
-    
     
     i = random.choice(sele)
     if move(i, 2): # if don't see any win movemet, move aleatority. 
@@ -79,6 +78,3 @@ def again(): # Reset all global variables
     for i in range(0,k*k):
         matriz.append(0)
         sele.append(i)
-
-
-
