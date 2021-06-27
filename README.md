@@ -20,6 +20,12 @@ En este programa se usó la librería de **TKINTER** su instalación es muy senc
 pip install tk
 ```
 
+Tambien utiliza **Pillow** su instalación es así:
+
+```
+pip install pillow
+```
+
 ------------
 
 ## Ejecución ⚙️ 
